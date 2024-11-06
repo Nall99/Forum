@@ -1,10 +1,10 @@
 # Sistema de comunicação e discussão entre estudantes e professores (Fórum)
 
 ## Tecnologias a serem utilizadas
-● Flask
-● HTML & CSS
-● JS
-● GIT / GITHUB
+* Flask
+* HTML & CSS
+* JS
+* GIT / GITHUB
 
 ## Requisitos funcionais
 ### ID: RF1
