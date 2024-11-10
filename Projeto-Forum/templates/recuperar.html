@@ -1,0 +1,23 @@
+{% extends "index.html" %}
+{% block content %} 
+    <div class = "container">
+    
+        <h1>Esqueceu sua senha?</h1>
+        <p>Enviaremos um e-mail com instruções de como <br> recuperar sua senha.</p>   
+        
+        
+        <div class = "email">
+            <input type="email" placeholder="E-mail">
+        </div>
+    
+    
+        <div class = "entrar"> 
+            <input type="submit" value="Enviar">
+            <P>Ainda não tem uma conta? <a href="/cadastro">
+                        Crie aqui
+                </a>
+            </P>
+        </div>
+    
+    </div>
+{% endblock %}

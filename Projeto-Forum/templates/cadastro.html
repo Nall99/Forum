@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+{% block content %} 
+    <div class="container">
+        <h1>Cadastro</h1>
+        
+        <div class = "name">
+            <input type="text" placeholder="Nome">
+        </div>
+        <div class = "email">
+            <input type="email" placeholder="E-mail">
+        </div>
+        <div class = "senha">
+            <input type="password" placeholder="Senha">
+        </div>
+        <div class = "senha">
+            <input type="password" placeholder="Confirmar senha">
+        </div>
+        <div class = "entrar">
+            
+            <input type = "submit" value="Cadastrar">
+            <P>Já tem uma conta? <a href="/">Entre aqui</a>
+            </P>
+        </div>
+    </div>
+{% endblock %}
+

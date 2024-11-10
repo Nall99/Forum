@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+{% block content %} 
+<div id="login">
+    <div class="container">
+        <h1>Login</h1>
+        <p>Welcome</p>
+        
+        <form action="{{ url_for('login.login') }}" method="POST">
+            <div class = "email">
+                <input type="email" placeholder="E-mail" name="email">
+            </div>
+            
+            <div class = "senha">
+                <input type="password" placeholder="Senha" name="senha">
+            </div>
+            
+            <div class = "relembrar">
+                <label><input type="checkbox" name="lembrar"> Lembrar de mim</label>
+                <a href="/recuperar">Esqueci minha senha</a>
+            </div>
+            
+            <button type="submit" class="btn">Entrar</button>
+        </form>
+        <div class = "entrar"> 
+            <!-- <input type="submit" value="Entrar"> -->
+            <P>Ainda não tem uma conta? <a href="/cadastro">
+                    Crie aqui
+                </a>
+            </P>
+        </div>
+    </div>
+</div>
+{% endblock %}
