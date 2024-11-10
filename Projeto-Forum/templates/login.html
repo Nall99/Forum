@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "index.html" %}
 {% block content %} 
 <div id="login">
@@ -31,3 +32,52 @@
     </div>
 </div>
 {% endblock %}
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+   
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css')}}">
+
+    <title>Document</title>
+</head>
+<body>
+    <div id = "login">
+        <div class = "container">
+
+            <h1>Login</h1>
+                <p>Welcome</p>
+            
+            
+            <div class = "email">
+                <input type="email" placeholder="E-mail">
+            </div>
+
+            <div class = "senha">
+                <input type="password" placeholder="Senha">
+            </div>
+
+            <div class = "relembrar">
+                <label><input type="checkbox"> Lembrar de mim</label>
+                <a href="recuperar.html">Esqueci minha senha</a> <!-- Criar a rota para tela de recuperação -->
+            </div>
+
+            <div class = "entrar"> 
+                <input type="submit" value="Entrar"> <!-- Criar a para tela de Principal -->
+                <P>Ainda não tem uma conta? <a href="cadastro.html">Crie aqui</a></P> <!-- Criar rota para tela de cadastro-->
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/cru.js') }}"></script>
+</body>
+</html>
+>>>>>>> 8ce7265 (Estrutura das pastas e Flask)
