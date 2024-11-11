@@ -9,3 +9,4 @@ configurarTudo(app)
 
 # execução
 app.run(debug=True)
+
