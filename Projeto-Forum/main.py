@@ -1,10 +1,10 @@
 from flask import Flask
 from configuracao import *
 
-# inicialização
+# inicialização 
 app = Flask(__name__)
 
-# configurações
+#configuração
 configurarTudo(app)
 
 # execução
