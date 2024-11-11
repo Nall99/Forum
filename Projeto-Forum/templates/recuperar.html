@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {% extends "index.html" %}
 {% block content %} 
     <div class = "container">
@@ -6,55 +5,20 @@
         <h1>Esqueceu sua senha?</h1>
         <p>Enviaremos um e-mail com instruções de como <br> recuperar sua senha.</p>   
         
+        <form action="{{ url_for('recuperarConta.recuperar') }}" method="POST">
+            <div class = "email">
+                <input type="email" placeholder="E-mail" name="email">
+            </div>
         
-        <div class = "email">
-            <input type="email" placeholder="E-mail">
-        </div>
-    
-    
-        <div class = "entrar"> 
-            <input type="submit" value="Enviar">
-            <P>Ainda não tem uma conta? <a href="/cadastro">
-                        Crie aqui
-                </a>
-            </P>
-        </div>
+        
+            <div class = "entrar"> 
+                <input type="submit" value="Enviar">
+                <P>Ainda não tem uma conta? <a href="/cadastro">
+                            Crie aqui
+                    </a>
+                </P>
+            </div>
+        </form>
     
     </div>
 {% endblock %}
-=======
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/style.css">
-
-    <title>Document</title>
-</head>
-<body>
-    <div id = "login">
-        <div class = "container">
-
-            <h1>Esqueceu sua senha?</h1>
-            <p>Enviaremos um e-mail com instruções de como <br> recuperar sua senha.</p>   
-            
-            
-            <div class = "email">
-                <input type="email" placeholder="E-mail">
-            </div>
-
-
-            <div class = "entrar"> 
-                <input type="submit" value="Enviar">
-                <P>Ainda não tem uma conta? <a href="cadastro.html">Crie aqui</a></P>
-            </div>
-
-        </div>
-    </div>
-</body>
-</html>
->>>>>>> 8ce7265 (Estrutura das pastas e Flask)
