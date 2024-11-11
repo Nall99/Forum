@@ -20,4 +20,8 @@ configurarTudo(app)
 
 # execução
 app.run(debug=True)
+<<<<<<< HEAD
 >>>>>>> 8ce7265 (Estrutura das pastas e Flask)
+=======
+
+>>>>>>> f95547a (update)
