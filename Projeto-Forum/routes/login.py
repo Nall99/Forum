@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, url_for
+from flask import Blueprint, render_template, request
 from database.models.usuario import USUARIOS
 
 login_route = Blueprint('login', __name__)
@@ -20,7 +20,9 @@ def verificando(email, senha):
                 print('Login realizado com sucesso')
                 break
         id += 1
-        
     
-    return render_template('principal.html', user=USUARIOS[id])
+    try:
+        return render_template('principal.html', user=USUARIOS[id])
+    except IndexError:
+        return render_template('login.html')
         
