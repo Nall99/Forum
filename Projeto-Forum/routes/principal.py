@@ -11,11 +11,14 @@ def principalTemplate(email):
         if usuario['email'].lower() == email.lower():
             break
         id += 1
-    
     try:
         return render_template('principal.html', idUsuario=id)
     except IndexError:
         return render_template('login.html')
+
+@principal_route.route('/listarTopicos')
+def listarTopicos():
+    return render_template('lista_topicos.html', topicos=TOPICOS)
 
 @principal_route.route('/<int:idUsuario>/criando-topico', methods=['POST'])
 def criandoTopico(idUsuario):
@@ -29,3 +32,4 @@ def criandoTopico(idUsuario):
     }
     TOPICOS.append(topico)
     return render_template('principal.html', idUsuario=idUsuario)
+

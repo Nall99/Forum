@@ -17,4 +17,4 @@ def cadastro():
         'senha': data['senha']
     }
     USUARIOS.append(new_user)
-    return render_template('principal.html')
+    return render_template('login.html')

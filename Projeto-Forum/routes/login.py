@@ -14,7 +14,6 @@ def login():
     for usuario in USUARIOS:
         if usuario['email'].lower() == data['email'].lower():
             if usuario['senha'] == data['senha']:
-                print('Login realizado com sucesso')
                 break
         id += 1
     

@@ -1,5 +1,3 @@
-{% extends "index.html" %}
-{% block content %} 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +11,7 @@
 <body>
  
     <!-- TOPO -->
-    <div class="topnav">
+    <div class="topnav fixed-top">
           <div class ="campus">
             <a class="active" href="#home">Conecta Campus</a>
           </div>
@@ -38,7 +36,7 @@
     <div class="descer">
         <a href="#">Categorias</a>
         <a href="#">Etiquetas</a>
-        <a href="#">Logout</a>
+        <a href="/">Logout</a>
     </div>
    
   </div>
@@ -61,8 +59,7 @@
       </div>
       
       <div class="topico">
-        
-        <input type="submit" value="+ Criar Topico">
+        <input type="submit" value="+ Criar Topico" data-bs-toggle="modal" data-bs-target="#exampleModal">
       </div>
     </div>
 
@@ -91,26 +88,27 @@
       <a>Topicos</a>
     </div>
     <hr>
-    <div class="coluna3">
-      <div class="espaco"><p class="titulo">Titulo</p></div>
-      <div class="espaco"><p class="categoria">Categoria</p></div>
-      <div class="espaco"><p class="conteudo">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur malesuada tempor posuere. Vestibulum aliquam ante in imperdiet mattis. Mauris nec ullamcorper odio. Ut ullamcorper augue ac urna congue, in viverra nisl lobortis. Ut tempor nisi non lectus tincidunt, et faucibus neque suscipit. Duis varius libero ac consequat gravida. Fusce gravida, nisi in sollicitudin pharetra, libero ligula ultrices lectus, vel cursus enim nisl vel nulla. Praesent sit amet nulla faucibus, viverra justo vitae, accumsan nisi. Quisque ac ante nec 
-        tellus sollicitudin finibus. Integer id ex eget lacus pretium convallis et eget nulla. 
-        Fusce vel mi metus. Pellentesque habitant morbi tristique senectus et netus et malesuada 
-        fames ac turpis egestas.</p></div>
-    </div>
-  
+
+    <div c-container="{{ url_for('principal.listarTopicos') }}"></div>
     
 
+    </div>
 
-
-
-
-
-
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            </div>
+            <div class="modal-body" id="topicoModal">{% include 'criarTopico.html' %}</div>
+          </div>
+        </div>
+      </div>
+    </div>
     
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='js/cru.js') }}"></script>
 </body>
 </html>
-{% endblock %}
