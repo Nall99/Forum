@@ -1,1 +1,116 @@
-<h1>Tela principal a fazer ainda</h1>
+{% extends "index.html" %}
+{% block content %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoCa</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='CSS/menuprincipal.css')}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+ 
+    <!-- TOPO -->
+    <div class="topnav">
+          <div class ="campus">
+            <a class="active" href="#home">Conecta Campus</a>
+          </div>
+            <a href="#perfil"><i class="bi bi-person-fill"></i></a>
+            <a href="#notificacao"><i class="bi bi-bell-fill"></i></a>
+            
+        <div class ="barra">
+        <input type="text" placeholder="Search..">
+        </div>
+      </div>
+
+
+
+
+    <!-- Side navigation -->
+<div class="sidenav">
+    <a href="#">Topicos</a>
+    <a href="#">Minhas postagens</a>
+    <a href="#">Professores</a>
+    <a href="#">Alunos</a>
+    <a href="#">Mais</a>
+    <div class="descer">
+        <a href="#">Categorias</a>
+        <a href="#">Etiquetas</a>
+        <a href="#">Logout</a>
+    </div>
+   
+  </div>
+
+  <!-- Page content -->
+  <div class="main">
+    
+    <div class="coluna1">
+      <div class="elemento">
+        <a href="#">Não lidos</a>
+      </div>
+      <div class="elemento">
+        <a href="#">Recentes</a>
+      </div>
+      <div class="elemento">
+        <a href="#">Categorias</a>
+      </div>
+      <div class="elemento">
+        <a href="#">Populares</a>
+      </div>
+      
+      <div class="topico">
+        
+        <input type="submit" value="+ Criar Topico">
+      </div>
+    </div>
+
+    <div class = "coluna2">
+       <div class="views">
+          <a>
+            Respostas
+          </a>
+       </div>
+       <div class="views">
+        <a>
+          Vizualiçãoes
+        </a>
+       </div>
+       <div class="views">
+        <a>
+          Atividade
+        </a>
+       </div>
+     
+     
+      
+    </div>
+
+    <div class="coluninha">
+      <a>Topicos</a>
+    </div>
+    <hr>
+    <div class="coluna3">
+      <div class="espaco"><p class="titulo">Titulo</p></div>
+      <div class="espaco"><p class="categoria">Categoria</p></div>
+      <div class="espaco"><p class="conteudo">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur malesuada tempor posuere. Vestibulum aliquam ante in imperdiet mattis. Mauris nec ullamcorper odio. Ut ullamcorper augue ac urna congue, in viverra nisl lobortis. Ut tempor nisi non lectus tincidunt, et faucibus neque suscipit. Duis varius libero ac consequat gravida. Fusce gravida, nisi in sollicitudin pharetra, libero ligula ultrices lectus, vel cursus enim nisl vel nulla. Praesent sit amet nulla faucibus, viverra justo vitae, accumsan nisi. Quisque ac ante nec 
+        tellus sollicitudin finibus. Integer id ex eget lacus pretium convallis et eget nulla. 
+        Fusce vel mi metus. Pellentesque habitant morbi tristique senectus et netus et malesuada 
+        fames ac turpis egestas.</p></div>
+    </div>
+  
+    
+
+
+
+
+
+
+
+    
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
+{% endblock %}
