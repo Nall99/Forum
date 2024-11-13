@@ -3,7 +3,8 @@
         method="POST" 
         c-append="lista-topicos"
         c-reset="true"
-        c-reload-container="true">
+        c-reload-container="true"
+        enctype="multipart/form-data">
     <div class="mb-3">
         <label class="form-label">Titulo do tópico</label>
         <input type="text" class="form-control" placeholder="Titulo" name="titulo">
@@ -20,6 +21,10 @@
     <div class="mb-3">
     <label class="form-label">Texto do tópico</label>
     <textarea class="form-control"  rows="3" name="texto"></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Carregar Arquivo</label>
+        <input class="form-control" type="file" id="formFile" name="arq">
     </div>
     
     <div class="modal-footer">

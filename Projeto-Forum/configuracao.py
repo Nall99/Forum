@@ -10,7 +10,7 @@ def configurarRotas(app):
     app.register_blueprint(login_route)
     app.register_blueprint(cadastro_route, url_prefix='/cadastro')
     app.register_blueprint(recuperar_route, url_prefix='/recuperar')
-    app.register_blueprint(principal_route, url_prefix='/home')
+    app.register_blueprint(principal_route, url_prefix='/principal')
 
 
 def configurarBancoDeDados():

@@ -42,72 +42,8 @@
   </div>
 
   <!-- Page content -->
-  <div class="main">
-    
-    <div class="coluna1">
-      <div class="elemento">
-        <a href="#">Não lidos</a>
-      </div>
-      <div class="elemento">
-        <a href="#">Recentes</a>
-      </div>
-      <div class="elemento">
-        <a href="#">Categorias</a>
-      </div>
-      <div class="elemento">
-        <a href="#">Populares</a>
-      </div>
-      
-      <div class="topico">
-        <input type="submit" value="+ Criar Topico" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      </div>
-    </div>
-
-    <div class = "coluna2">
-       <div class="views">
-          <a>
-            Respostas
-          </a>
-       </div>
-       <div class="views">
-        <a>
-          Vizualiçãoes
-        </a>
-       </div>
-       <div class="views">
-        <a>
-          Atividade
-        </a>
-       </div>
-     
-     
-      
-    </div>
-
-    <div class="coluninha">
-      <a>Topicos</a>
-    </div>
-    <hr>
-
-    <div c-container="{{ url_for('principal.listarTopicos') }}"></div>
-    
-
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            </div>
-            <div class="modal-body" id="topicoModal">{% include 'criarTopico.html' %}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-  </div>
+  <div id="conteudos" c-container="{{ url_for('principal.conteudoPrincipal', idUsuario=idUsuario) }}"></div>
+  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script src="{{ url_for('static', filename='js/cru.js') }}"></script>
 </body>

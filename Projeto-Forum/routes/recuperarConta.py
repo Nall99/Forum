@@ -6,10 +6,11 @@ from random import randint
 
 def topicoDeRecuperacao(paraEmail):
     CodRecuperacao = randint(0, 5000)
+    CodRecuperacao_str = str(CodRecuperacao).zfill(3)
     corpo_email= f"""
     <p>Opa, tudo bem?</p>
     <p>Estou lhe enviando o código necessario para recuperação da sua conta</p>
-    <p>Código de recuperação: {CodRecuperacao}</p>
+    <p>Código de recuperação: {CodRecuperacao_str}</p>
     """
 
     msg = email.message.Message()
