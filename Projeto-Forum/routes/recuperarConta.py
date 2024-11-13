@@ -4,7 +4,7 @@ import email.message
 from random import randint
 
 
-def mensagemDeRecuperacao(paraEmail):
+def topicoDeRecuperacao(paraEmail):
     CodRecuperacao = randint(0, 5000)
     corpo_email= f"""
     <p>Opa, tudo bem?</p>
@@ -38,5 +38,5 @@ def recuperarTemplate():
 @recuperar_route.route('/recuperando', methods=['POST'])
 def recuperar():
     data = request.form
-    mensagemDeRecuperacao(data['email'])
+    topicoDeRecuperacao(data['email'])
     return render_template('login.html')
