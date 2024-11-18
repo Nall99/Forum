@@ -3,7 +3,7 @@ from database.models.usuario import USUARIOS
 
 login_route = Blueprint('login', __name__)
 
-@login_route.route('/')
+@login_route.route('/login')
 def loginTemplate():
     return render_template('login.html')
 

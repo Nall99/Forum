@@ -5,7 +5,7 @@
         <h1>Login</h1>
         <p>Welcome ao Conecta Campus </p>
         
-        <form action="{{ url_for('login.login') }}" method="POST">
+        <form action="{{ url_for('auth.login') }}" method="POST">
             <div class = "email">
                 <input type="email" placeholder="E-mail" name="email">
             </div>
@@ -19,12 +19,12 @@
                 
             </div>
             <div>
-                <a href="/recuperar">Esqueci minha senha</a>
+                <a href="/recuperar/">Esqueci minha senha</a>
             </div>
             
             <div class = "entrar"> 
                 <input type="submit" value="Entrar">
-                <P>Ainda não tem uma conta? <a href="/cadastro">
+                <P>Ainda não tem uma conta? <a href="/cadastro/">
                         Crie aqui
                     </a>
                 </P>

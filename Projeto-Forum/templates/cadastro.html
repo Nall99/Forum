@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Cadastro</h1>
         
-        <form action="{{ url_for('cadastro.cadastro') }}" method="POST">
+        <form action="{{ url_for('auth.cadastro') }}" method="POST">
             <div class = "name">
                 <input type="text" placeholder="Nome" name="nome">
             </div>
@@ -12,10 +12,10 @@
                 <input type="email" placeholder="E-mail" name="email">
             </div>
             <div class = "senha">
-                <input type="password" placeholder="Senha">
+                <input type="password" placeholder="Senha" name="senha1">
             </div>
             <div class = "senha">
-                <input type="password" placeholder="Confirmar senha" name="senha">
+                <input type="password" placeholder="Confirmar senha" name="senha2">
             </div>
     
             <div class = "entrar">

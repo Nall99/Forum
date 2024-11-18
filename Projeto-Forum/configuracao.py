@@ -1,18 +1,21 @@
-from routes.login import login_route
-from routes.cadastro import cadastro_route
-from routes.recuperarConta import recuperar_route
 from routes.principal import principal_route
+from routes.auth import auth_route
+from flask_sqlalchemy import SQLAlchemy
 
-def configurarTudo(app):
-    configurarRotas(app)
+db = SQLAlchemy()
 
 def configurarRotas(app):
-    app.register_blueprint(login_route)
-    app.register_blueprint(cadastro_route, url_prefix='/cadastro')
-    app.register_blueprint(recuperar_route, url_prefix='/recuperar')
+    app.register_blueprint(auth_route)
     app.register_blueprint(principal_route, url_prefix='/principal')
 
 
-def configurarBancoDeDados():
-    # ToDo
-    pass
+def configurarBancoDeDados(app):
+    DB_NOME = 'database.db'
+
+    app.config['SECRET_KEY'] = 'hifsehifjsd fhisehfsd'
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NOME}'
+    
+    db.init_app(app)
+    
+    return db
+    
