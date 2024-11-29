@@ -5,24 +5,61 @@
         <h1>Cadastro</h1>
         
         <form action="{{ url_for('auth.cadastro') }}" method="POST">
+            {{ form.hidden_tag() }}
             <div class = "name">
-                <input type="text" placeholder="Nome" name="nome">
+                {% if form.nome.errors %}
+                    {{ form.nome(placeholder="Nome", class="is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.nome.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                {% else %}
+                    {{ form.nome(placeholder="Nome") }}
+                {% endif %}
             </div>
             <div class = "email">
-                <input type="email" placeholder="E-mail" name="email">
+                {% if form.email.errors %}
+                    {{ form.email(placeholder="Email", class="is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                {% else %}
+                    {{ form.email(placeholder="Email") }}
+                {% endif %} 
             </div>
+
             <div class = "senha">
-                <input type="password" placeholder="Senha" name="senha1">
+                {% if form.senha.errors %}
+                        {{ form.senha(placeholder="Senha", class="is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.senha.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                {% else %}
+                    {{ form.senha(placeholder="Senha") }}
+                {% endif %}
             </div>
+
             <div class = "senha">
-                <input type="password" placeholder="Confirmar senha" name="senha2">
+                {% if form.confirmar_senha.errors %}
+                        {{ form.confirmar_senha(placeholder="Confirmar Senha", class="is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.senha.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                {% else %}
+                    {{ form.confirmar_senha(placeholder="Confirmar Senha") }}
+                {% endif %}
             </div>
     
             <div class = "entrar">
-                
-                <input type = "submit" value="Cadastrar">
-                <P>Já tem uma conta? <a href="/">Entre aqui</a>
-                </P>
+                {{ form.submit(class="btn-outline-info") }}
+                <P>Já tem uma conta? <a href="/">Entre aqui</a></P>
             </div>
         </form>
     </div>

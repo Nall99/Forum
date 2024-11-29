@@ -1,29 +1,29 @@
 <form 
-        action=" {{ url_for('principal.criandoTopico', idUsuario=idUsuario) }}" 
+        action=" {{ url_for('principal.criando_topico') }}" 
         method="POST" 
         c-append="lista-topicos"
         c-reset="true"
         c-reload-container="true"
         enctype="multipart/form-data">
+    
+    {{ form.hidden_tag() }}
     <div class="mb-3">
         <label class="form-label">Titulo do tópico</label>
-        <input type="text" class="form-control" placeholder="Titulo" name="titulo">
+        {{ form.titulo(class="form-control", placeholder="Titulo") }}
     </div>
       
     <div class="mb-3 form-group col-md">
         <label class="form-label">Categorias</label>
-        <select class="form-control" name="list">
-            <option value="Engenharia de Software">Engenharia de software</option>
-            <option value="Banco de Dados">Banco de Dados</option>
-        </select>
+        {{ form.categoria(class="form-control") }}
     </div>
       
     <div class="mb-3">
-    <label class="form-label">Texto do tópico</label>
-    <textarea class="form-control"  rows="3" name="texto"></textarea>
+        <label class="form-label">Texto do tópico</label>
+        {{ form.texto(class="form-control", rows="3") }}
     </div>
     <div class="mb-3">
         <label for="formFile" class="form-label">Carregar Arquivo</label>
+        {{ form.arquivo }}
         <input class="form-control" type="file" id="formFile" name="arq">
     </div>
     

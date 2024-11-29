@@ -6,24 +6,43 @@
         <p>Welcome ao Conecta Campus </p>
         
         <form action="{{ url_for('auth.login') }}" method="POST">
+            {{ form.hidden_tag() }}
             <div class = "email">
-                <input type="email" placeholder="E-mail" name="email">
+                {% if form.email.errors %}
+                    {{ form.email(placeholder="Email", class="is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.email(placeholder="Email") }}
+                {% endif %} 
             </div>
             
             <div class = "senha">
-                <input type="password" placeholder="Senha" name="senha">
+                {% if form.senha.errors %}
+                    {{ form.senha(placeholder="Senha", class="is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.senha.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.senha(placeholder="Senha") }}
+                {% endif %}
             </div>
             
             <div class = "relembrar">
-                <label><input type="checkbox" name="lembrar"> Lembrar de mim</label>
-                
+                {{ form.lembrar(class="form-check-input") }}
+                {{ form.lembrar.label}}
             </div>
             <div>
                 <a href="/recuperar/">Esqueci minha senha</a>
             </div>
             
             <div class = "entrar"> 
-                <input type="submit" value="Entrar">
+                {{ form.submit(class="btn-outline-info") }}
                 <P>Ainda não tem uma conta? <a href="/cadastro/">
                         Crie aqui
                     </a>

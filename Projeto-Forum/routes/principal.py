@@ -1,56 +1,70 @@
-from flask import Blueprint, render_template, request
-from werkzeug.utils import secure_filename
-# from database.models.usuario import USUARIOS
-# from database.models.topico import TOPICOS
-# from main import app
+from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask_login import current_user, login_required, logout_user
+from models import Topico, User, db
+from forms import TopicoForm, UpdateForm
+from PIL import Image
+import secrets
 import os
 
 principal_route = Blueprint('principal', __name__)
 
-# @principal_route.route('/<email>')
-# def principalTemplate(email):
-#     id = 0
-#     for usuario in USUARIOS:
-#         if usuario['email'].lower() == email.lower():
-#             break
-#         id += 1
-#     try:
-#         return render_template('principal.html', idUsuario=id)
-#     except IndexError:
-#         return render_template('login.html')
+@principal_route.route('/')
+def principalTemplate():
+    return render_template('principal.html')
 
+@principal_route.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('auth.login'))
 
-# @principal_route.route('/<int:idUsuario>/conteudoPrincipal')
-# def conteudoPrincipal(idUsuario):
-#     return render_template('conteudoPrincipal.html', idUsuario=idUsuario)
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    foto_fn = random_hex + f_ext
+    foto_path = os.path.join(principal_route.root_path,'..', 'static/profile-pics', foto_fn)
 
-# @principal_route.route('/<int:idTopico>/detalhesTopico')
-# def detalhesTopico(idTopico):
-#     topico = list(filter(lambda t: t['id'] == idTopico, TOPICOS))[0]
-#     return render_template('detalhesTopico.html', topico=topico)
+    output_size = (125, 125)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(foto_path)
 
-# @principal_route.route('/listarTopicos')
-# def listarTopicos():
-#     return render_template('lista_topicos.html', topicos=TOPICOS)
+    return foto_fn
 
-# @principal_route.route('/<int:idUsuario>/criando-topico', methods=['POST'])
-# def criandoTopico(idUsuario):
-#     data = request.form
-#     arq = request.files['arq']
-#     topico = {
-#         'id': len(TOPICOS),
-#         'idUsuario': idUsuario,
-#         'titulo': data['titulo'],
-#         'categoria': data['list'],
-#         'texto': data['texto'],
-#     }
-#     TOPICOS.append(topico)
-#     # if arq:
-#     #     filename = secure_filename(arq.filename)
-#     #     file_path = os.path.normpath(os.path.join('./Projeto-Forum/static/files', filename))
-#     #     arq.save(file_path)
+@principal_route.route('/criando+topico', methods=['GET', 'POST'])
+def criando_topico():
+    form = TopicoForm()
+    if request.method == 'POST':
+        novo_topico = Topico(titulo=form.titulo.data,
+                             categoria=form.categoria.data,
+                             texto=form.texto.data,
+                             etiqueta="nada ainda",
+                             autor_id=current_user.id)
+        db.session.add(novo_topico)
+        db.session.commit()
+        return redirect(url_for('principal.principalTemplate'))
+    return render_template('criarTopico.html', form=form)
 
-    # return render_template('principal.html', idUsuario=idUsuario)
+@principal_route.route('/lista+topicos')
+def lista_topicos():
+    topicos = Topico.query.all()
+    return render_template('lista_topicos.html', topicos=topicos)
 
-        
+@principal_route.route('/perfil', methods=['GET','POST'])
+@login_required
+def perfil():
+    form = UpdateForm()
+    if form.validate_on_submit():
+        if form.foto.data:
+            arq_foto = save_picture(form.foto.data)
+            current_user.arq_imagem = arq_foto
+        current_user.nome = form.nome.data
+        current_user.email = form.email.data
+        db.session.commit()
+        return redirect(url_for('principal.perfil'))
+    elif request.method == 'GET':
+        form.nome.data = current_user.nome
+        form.email.data = current_user.email
+    arq_imagem = url_for('static', filename='profile-pics/' + current_user.arq_imagem)
+    return render_template('perfil.html', imagem=arq_imagem, form=form)
 

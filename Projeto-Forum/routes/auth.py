@@ -1,29 +1,41 @@
 from flask import render_template, Blueprint, request, flash, url_for, redirect
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user, login_required, logout_user, current_user
+from flask_login import login_user, current_user
+from models import User, db
+from forms import CadastroForm, LoginForm
 
 auth_route = Blueprint('auth', __name__)
 
 @auth_route.route('/', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    if current_user.is_authenticated:
+        return redirect(url_for('principal.principalTemplate'))
+    form = LoginForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            user = User.query.filter_by(email=form.email.data).first()
+            if user and check_password_hash(user.senha, form.senha.data):
+                login_user(user, remember=form.lembrar.data)
+                return redirect(url_for('principal.principalTemplate'))
+            else:
+                flash("Falha no login. Email ou senha estão incorretos", "error")
+
+    return render_template('login.html', user=current_user, form=form)
 
 @auth_route.route('/cadastro/', methods=['GET', 'POST'])
 def cadastro():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        nome = request.form.get('nome')
-        senha1 = request.form.get('senha1')
-        senha2 = request.form.get('senha2')
-
-        if len(nome) < 2:
-            flash('Seu nome precisa ser maior que 1 único caracter', category='error')
-        elif senha1 != senha2:
-            flash('As senhas estão diferentes', category='error')
-        elif len(senha1) < 7:
-            flash('Sua senha deve ser maior que 8 caracteres', category='error')
-        else:
-            flash('Sua conta foi criada com sucesso!', category='success')
-            pass
+    if current_user.is_authenticated:
+        return redirect(url_for('principal.principalTemplate'))
     
-    return render_template('cadastro.html')
+    form = CadastroForm()
+    if form.validate_on_submit():
+        hash_senha = generate_password_hash(form.senha.data, method='pbkdf2:sha256')
+        new_user = User(nome=form.nome.data, email=form.email.data, senha=hash_senha)
+        db.session.add(new_user)
+        db.session.commit()
+        flash('Sua conta foi criada com sucesso!', category='success')
+        return redirect(url_for('auth.login'))
+    else:
+        flash(form.errors, category="error")
+
+    return render_template('cadastro.html', user=current_user, form=form)
