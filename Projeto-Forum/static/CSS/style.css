@@ -38,6 +38,18 @@ a {
     
 }
 
+.codigo input {
+    border-radius: 15px;
+    border: none;
+    width: 250px;
+    height: 40px;
+    padding-left: 15px;
+    background-color: azure;
+    color: #00000080;
+    margin-top: 30px;
+    
+}
+
 .senha input {
     border-radius: 15px;
     border: none;
@@ -49,6 +61,19 @@ a {
     margin-top: 15px;
     
 }
+
+.novasenha input {
+    border-radius: 15px;
+    border: none;
+    width: 250px;
+    height: 40px;
+    padding-left: 15px;
+    background-color: azure;
+    color: #00000080;
+    margin-top: 15px;
+    
+}
+
 
 .relembrar {
     display: flex;
