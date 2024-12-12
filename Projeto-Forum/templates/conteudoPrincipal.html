@@ -1,6 +1,7 @@
+{% extends "index.html" %}
+{% block content %}
 <div class="main">
-    
-    <div class="coluna1">
+    <div class="coluna1" >
       <div class="elemento">
         <a href="#">Não lidos</a>
       </div>
@@ -15,7 +16,7 @@
       </div>
       
       <div class="topico">
-        <button type="button" class="btn-outline-info" onclick="window.location.href='{{ url_for('principal.criando_topico') }}';">+ Criar Tópico</button>
+        <a href="criando+topico" class="btn btn-secondary" style="margin-left: 400px;">+ Criar Tópico</a>
       </div>
     </div>
 
@@ -49,3 +50,4 @@
     
 
 </div>
+{%  endblock %}

@@ -20,7 +20,7 @@ def login():
             else:
                 flash("Falha no login. Email ou senha estão incorretos", "error")
 
-    return render_template('login.html', user=current_user, form=form)
+    return render_template('login.html', user=current_user.is_authenticated, form=form)
 
 @auth_route.route('/cadastro/', methods=['GET', 'POST'])
 def cadastro():

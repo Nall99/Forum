@@ -1,34 +1,54 @@
-<form 
-        action=" {{ url_for('principal.criando_topico') }}" 
-        method="POST" 
-        c-append="lista-topicos"
-        c-reset="true"
-        c-reload-container="true"
-        enctype="multipart/form-data">
-    
-    {{ form.hidden_tag() }}
-    <div class="mb-3">
-        <label class="form-label">Titulo do tópico</label>
-        {{ form.titulo(class="form-control", placeholder="Titulo") }}
+{% extends 'index.html' %}
+{% block content %}
+<main role="main" class="container mt-5">
+    <div style="background: #ffffff; padding: 10px 20px; border: 1px solid #dddddd; border-radius: 3px; margin-bottom: 20px;">
+        <form 
+                action=" {{ url_for('principal.criando_topico') }}" 
+                method="POST" 
+                enctype="multipart/form-data"
+            >
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.titulo.label(class="form-control-label") }}
+        
+                    {% if form.titulo.errors %}
+                        {{ form.titulo(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.titulo.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.titulo(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Categorias</label>
+                    {{ form.categoria(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.texto.label(class="form-control-label") }}
+                    {% if form.texto.errors %}
+                        {{ form.texto(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.texto.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.texto(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+              
+            <div class="modal-footer">
+            <a href="/principal" class="btn btn-danger">Voltar</a>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+            </div>
+        </form>
+        {{ ckeditor.load() }}
+        {{ ckeditor.config(name='texto') }}
     </div>
-      
-    <div class="mb-3 form-group col-md">
-        <label class="form-label">Categorias</label>
-        {{ form.categoria(class="form-control") }}
-    </div>
-      
-    <div class="mb-3">
-        <label class="form-label">Texto do tópico</label>
-        {{ form.texto(class="form-control", rows="3") }}
-    </div>
-    <div class="mb-3">
-        <label for="formFile" class="form-label">Carregar Arquivo</label>
-        {{ form.arquivo }}
-        <input class="form-control" type="file" id="formFile" name="arq">
-    </div>
-    
-    <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-    <button type="submit" class="btn btn-primary">Enviar</button>
-    </div>
-</form>
+</main>
+{% endblock %}

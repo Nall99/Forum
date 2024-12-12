@@ -41,9 +41,36 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-    <div>
+    {% if user %}
+        <!-- TOPO -->
+        <div class="topnav fixed-top">
+            <div class ="campus">
+            <a class="active" href="/principal">Conecta Campus</a>
+            </div>
+            <a href="perfil"><i class="bi bi-person-fill"></i></a>
+            <a href="#notificacao"><i class="bi bi-bell-fill"></i></a>
+            
+            <div class ="barra">
+            <input type="text" placeholder="Search..">
+            </div>
+        </div>
+        
+
+        <!-- Side navigation -->
+        <div class="sidenav">
+            <a href="#">Topicos</a>
+            <a href="#">Minhas postagens</a>
+            <a href="#">Professores</a>
+            <a href="#">Alunos</a>
+            <a href="#">Mais</a>
+            <div class="descer">
+            <a href="#">Categorias</a>
+            <a href="#">Etiquetas</a>
+            <a href="{{ url_for('principal.logout') }}">Logout</a>
+            </div>
+        </div>
+    {% endif %}
         {% block content %}{% endblock %}
-    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

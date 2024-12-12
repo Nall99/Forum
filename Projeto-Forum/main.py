@@ -1,6 +1,7 @@
 from flask_login import LoginManager
-from models import db, User
 from flask_wtf import CSRFProtect
+from flask_ckeditor import CKEditor
+from models import db, User
 from flask import Flask
 
 # Importação das Rotas
@@ -9,6 +10,7 @@ from routes.auth import auth_route
 
 # Criando app
 app = Flask(__name__)
+ckeditor = CKEditor(app) 
 
 csrf = CSRFProtect()
 

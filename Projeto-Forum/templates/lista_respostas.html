@@ -1,0 +1,23 @@
+{% for resposta in respostas %} 
+<div class="container mb-3" style="background: #ffffff; padding: 10px 20px; border: 2px solid #aaaaaa; border-radius: 3px; width: 1110px;">
+    <div class="row">
+        <div class="col-md-1">
+            <img 
+            class="rounded-circle article-img"
+            src="{{ url_for('static', filename='profile-pics/' + resposta.autor.arq_imagem) }}"
+            style="height: 50px; width: 50px;"
+            >
+        </div>
+        <div class="col">
+            <div class="media-body">
+                <div class="align-center">
+                {{ resposta.autor.nome }}
+                <small class="text-muted">{{ tempo_relativo(resposta.data) }}</small>
+        
+                </div>
+                <p class="article-content">{{ resposta.texto|safe }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}

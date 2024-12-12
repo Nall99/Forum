@@ -1,7 +1,7 @@
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
-from wtforms.widgets import TextArea
 from flask_wtf.file import FileField, FileAllowed
+from flask_ckeditor import CKEditorField
 from flask_login import current_user
 from flask_wtf import FlaskForm
 from models import User
@@ -9,7 +9,7 @@ from models import User
 class TopicoForm(FlaskForm):
     titulo = StringField(validators=[DataRequired(), Length(max=15)])
     categoria = SelectField(validators=[DataRequired()], choices=["Engenharia de software", "Banco de Dados"])
-    texto = StringField(validators=[DataRequired()], widget=TextArea())
+    texto = CKEditorField('Texto', validators=[DataRequired()])
     arquivo = FileField('Enviar arquivo', validators=[FileAllowed(['pdf', 'png'])])
     submit = SubmitField('Enviar')
 
@@ -42,3 +42,7 @@ class UpdateForm(FlaskForm):
             user = User.query.filter_by(email=email.data).first()
             if user:
                 raise ValidationError('Esse email já está em uso. Por favor escolha outro')
+
+class RespostaForm(FlaskForm):
+    texto = CKEditorField('Texto', validators=[DataRequired()])
+    submit = SubmitField('Enviar')
