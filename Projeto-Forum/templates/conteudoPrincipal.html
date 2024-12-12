@@ -1,7 +1,7 @@
-<!-- Page content -->
+{% extends "index.html" %}
+{% block content %}
 <div class="main">
-    
-    <div class="coluna1">
+    <div class="coluna1" >
       <div class="elemento">
         <a href="#">Não lidos</a>
       </div>
@@ -16,7 +16,7 @@
       </div>
       
       <div class="topico">
-        <input type="submit" value="+ Criar Topico" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <a href="criando+topico" class="btn btn-secondary" style="margin-left: 400px;">+ Criar Tópico</a>
       </div>
     </div>
 
@@ -46,19 +46,8 @@
     </div>
     <hr>
 
-    <div c-container="{{ url_for('principal.listarTopicos') }}"></div>
+    <div c-container="{{ url_for('principal.lista_topicos') }}"></div>
     
 
 </div>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        </div>
-        <div class="modal-body" id="topicoModal">{% include 'criarTopico.html' %}</div>
-        </div>
-    </div>
-</div>
+{%  endblock %}

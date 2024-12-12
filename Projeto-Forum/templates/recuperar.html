@@ -6,7 +6,7 @@
         <h1>Esqueceu sua senha?</h1>
         <p>Enviaremos um e-mail com instruções de como <br> recuperar sua senha.</p>   
         
-        <form action="{{ url_for('recuperarConta.recuperar') }}" method="POST">
+        <form action="{{ url_for('auth.recuperar') }}" method="POST">
             <div class = "email">
                 <input type="email" placeholder="E-mail" name="email">
             </div>

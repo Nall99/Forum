@@ -109,7 +109,7 @@ h1 {
 }
 
 .container {
-    margin-top: 65px;
+    width: 150%;
 }
 
 input:focus {

@@ -155,7 +155,7 @@ body {
     
   }
   
-  .topico input{
+  .topico button{
     margin-left: 300px;
     border-radius: 20px;
     border: none;
@@ -206,7 +206,7 @@ body {
   }
   
   .titulo{
-    font-size: 12px;
+    font-size: 18px;
     font-weight: 500;
   }
   

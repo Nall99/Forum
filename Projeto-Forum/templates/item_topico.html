@@ -1,6 +1,32 @@
-<button class="btn container" c-get="{{ url_for('principal.detalhesTopico', idTopico=topico.id) }}" c-swap="#conteudos">
-    <div class="espaco text-start"><p class="titulo">{{ topico.titulo }}</p></div>
-    <div class="espaco text-start"><p class="categoria">{{ topico.categoria }}</p></div>
-    <div class="espaco text-start text-truncate" style="overflow: hidden"><p class="conteudo">{{ topico.texto }}</p></div>
-    
-</button>
+<a class="btn container" href="{{ url_for('principal.detalhe_topico', topicoID=topico.id, titulo_topico=topico.titulo) }}">
+    <div class="row align-items-center">
+        <div class="col-md-1" style="margin-right: 10px;">
+            <img 
+            class="rounded-circle article-img"
+            src="{{ url_for('static', filename='profile-pics/' + topico.autor.arq_imagem) }}"
+            style="height: 90px; width: 90px;"
+            >
+        </div>
+        <div class="col-xl-7" style="margin-right: 25px;">
+            <div class="espaco text-start"><p class="titulo">{{ topico.titulo }}</p></div>
+            <div class="espaco text-start"><p class="categoria">{{ topico.categoria }}</p></div>
+            <div class="espaco text-start text-truncate" style="overflow: hidden; width: 50%;">{{ topico.texto|safe }}</div>
+        </div>
+        <div class="col-sm-1" style="margin-right: 30px;">
+            <div class="espaco "><p>{{ topico.respostas|length }}</p></div>
+            
+        </div>
+        <div class="col-sm-1" style="margin-right: 20px;">
+            <div class="espaco"><p>{{ topico.quantidade_de_autores_unicos }}</p></div>
+        </div>
+        <div class="col-sm-1" style="padding: 0px;">
+            <div class="espaco "><p>
+                {% if topico.ultima_resposta_data %}
+                    {{ tempo_relativo(topico.ultima_resposta_data) }}
+                {% else %}
+                    {{ tempo_relativo(topico.data) }}
+                {% endif %}
+            </p></div>
+        </div>
+    </div>
+</a>
