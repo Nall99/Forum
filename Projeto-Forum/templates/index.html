@@ -64,8 +64,22 @@
             <a href="#">Alunos</a>
             <a href="#">Mais</a>
             <div class="descer">
-            <a href="#">Categorias</a>
-            <a href="#">Etiquetas</a>
+                <div class="dropdown">
+                    <a onclick="myFunction()" class="dropdown-text">Categorias</a>
+                    <div id="myDropdown" class="dropdown-content">
+                      <a href="#categoria">geral</a>
+                      <a href="#categoria">Aviso</a>
+                      
+                    </div>
+                  </div> 
+                  <div class="dropdown">
+                    <a onclick="toggleEtiquetas()" class="dropdown-text">Etiquetas</a>
+                    <div id="etiquetasDropdown" class="dropdown-content">
+                      <a href="#etiqueta1">Etiqueta 1</a>
+                      <a href="#etiqueta2">Etiqueta 2</a>
+                      <a href="#etiqueta3">Etiqueta 3</a>
+                    </div>
+                  </div>
             <a href="{{ url_for('principal.logout') }}">Logout</a>
             </div>
         </div>
@@ -76,5 +90,39 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     
     <script src="{{ url_for('static', filename='js/cru.js') }}"></script>
+    <script>
+        /* Alterna entre mostrar e esconder o conteúdo do dropdown */
+        function myFunction() {
+          document.getElementById("myDropdown").classList.toggle("show");
+        }
+    
+        function toggleEtiquetas() {
+        document.getElementById("etiquetasDropdown").classList.toggle("show");
+      }
+        
+        // Fecha o dropdown se o usuário clicar fora dele
+        window.onclick = function(event) {
+          if (!event.target.matches('.dropdown-text')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            for (var i = 0; i < dropdowns.length; i++) {
+              var openDropdown = dropdowns[i];
+              if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+              }
+            }
+          }
+        }
+        </script>
+    
+        <!-- mostra os arquivos do upload-->
+    
+        <script>
+          const actualBtn = document.getElementById('actual-btn');
+          const fileChosen = document.getElementById('file-chosen');
+      
+          actualBtn.addEventListener('change', function() {
+            fileChosen.textContent = this.files.length > 0 ? this.files[0].name : "Nenhum arquivo escolhido";
+          });
+        </script>
 </body>
 </html>
