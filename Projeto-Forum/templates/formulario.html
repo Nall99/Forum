@@ -1,0 +1,70 @@
+{% extends "index.html" %}
+{% block content %}
+  <!-- Page content -->
+  <div class="main">
+    
+    <div class="formulario">
+        <div class="form_box">
+            <form 
+                style="padding-top: 5px;"
+                action=" {{ url_for('principal.criando_topico') }}" 
+                method="POST" 
+                enctype="multipart/form-data"
+            >
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <p style="margin-bottom: 0;">{{ form.titulo.label }}</p>
+                <div>
+                    {% if form.titulo.errors %}
+                        {{ form.titulo(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.titulo.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.titulo(style="width: 100%") }}
+                    {% endif %}
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p style="margin-bottom: 0;">Categoria</p>
+                        <div>
+                            {{ form.categoria(style="width: 100%") }}
+                        </div>
+                    </div>
+                    <div class="col">
+                        <p style="margin-bottom: 0;">Etiqueta</p>
+                        <div>
+                            {{ form.etiqueta(style="width: 100%") }}
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    {{ form.texto.label(class="form-control-label") }}
+                    {% if form.texto.errors %}
+                        {{ form.texto(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.texto.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.texto(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+            </fieldset>
+
+                <button type="submit">Voltar</button>
+                <button class="bnt-outline-info" type="submit" name="criartop" style="color: aliceblue;">Criar topico</button>
+
+            </form>
+            {{ ckeditor.load() }}
+            {{ ckeditor.config(name='texto') }}
+        </div>
+
+
+    </div>
+{% endblock %}

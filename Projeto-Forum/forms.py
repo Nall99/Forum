@@ -7,10 +7,11 @@ from flask_wtf import FlaskForm
 from models import User
 
 class TopicoForm(FlaskForm):
-    titulo = StringField(validators=[DataRequired(), Length(max=15)])
-    categoria = SelectField(validators=[DataRequired()], choices=["Engenharia de software", "Banco de Dados"])
+
+    titulo = StringField(validators=[DataRequired(), Length(max=50)])
+    categoria = SelectField(validators=[DataRequired()])
+    etiqueta = SelectField(validators=[DataRequired()])
     texto = CKEditorField('Texto', validators=[DataRequired()])
-    arquivo = FileField('Enviar arquivo', validators=[FileAllowed(['pdf', 'png'])])
     submit = SubmitField('Enviar')
 
 class CadastroForm(FlaskForm):

@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import current_user, login_required, logout_user
 from forms import TopicoForm, UpdateForm, RespostaForm
-from models import Topico, User, Resposta, db
+from models import Topico, User, Resposta, Categoria, Etiqueta, db
 from datetime import datetime
+from sqlalchemy import func
 from PIL import Image
 import secrets
 import os
@@ -27,7 +28,9 @@ def tempo_relativo(data_envio):
 
 @principal_route.route('/')
 def principalTemplate():
-    return render_template('conteudoPrincipal.html', user=current_user.is_authenticated)
+    categorias = Categoria.query.all()
+    etiquetas = Etiqueta.query.all()
+    return render_template('conteudoPrincipal.html', user=current_user.is_authenticated, categorias=categorias, etiquetas=etiquetas)
 
 @principal_route.route('/logout')
 @login_required
@@ -50,21 +53,70 @@ def save_picture(form_picture):
 
 @principal_route.route('/criando+topico', methods=['GET', 'POST'])
 def criando_topico():
+
     form = TopicoForm()
+    form.categoria.choices = [categoria.nome for categoria in Categoria.query.all()]
+    form.etiqueta.choices = [etiqueta.nome for etiqueta in Etiqueta.query.all()]
     if request.method == 'POST':
         novo_topico = Topico(titulo=form.titulo.data,
                              categoria=form.categoria.data,
                              texto=form.texto.data,
-                             etiqueta="nada ainda",
-                             autor_id=current_user.id)
+                             etiqueta=form.etiqueta.data,
+                             autor_id=current_user.id,
+                             data=datetime.now())
         db.session.add(novo_topico)
         db.session.commit()
         return redirect(url_for('principal.principalTemplate'))
-    return render_template('criarTopico.html', form=form, user=not current_user.is_authenticated)
+    return render_template('formulario.html', form=form, user=current_user.is_authenticated)
 
-@principal_route.route('/lista+topicos')
-def lista_topicos():
-    topicos = Topico.query.all()
+@principal_route.route('/lista+topicos/<filtro>')
+def lista_topicos(filtro):
+
+    user_id = current_user.id  # Presumindo que você está usando Flask-Login para autenticação
+
+    categorias = [categoria.nome for categoria in Categoria.query.all()]
+    etiquetas = [etiqueta.nome for etiqueta in Etiqueta.query.all()]
+
+    # Base da consulta
+    query = Topico.query
+    topicos = []  # Inicializa topicos como uma lista vazia
+
+    # Filtrar por categoria
+    if filtro in categorias:
+        query = query.filter(Topico.categoria.ilike(filtro))
+    
+    # Filtrar por etiqueta
+    elif filtro in etiquetas:
+        query = query.filter(Topico.etiqueta.ilike(filtro))
+    
+    # Filtrar pelos tópicos criados pelo usuário atual
+    elif filtro.lower() == "meus topicos":
+        query = query.filter(Topico.autor_id == user_id)
+    
+    # Filtrar por nome de usuário
+    elif User.query.filter_by(nome=filtro).first():
+        usuario = User.query.filter_by(nome=filtro).first()
+        query = query.filter(Topico.autor_id == usuario.id)
+    
+    # Filtrar por tópicos mais recentes
+    elif filtro.lower() == "mais recentes":
+        query = query.order_by(Topico.data.desc())
+    
+    # Filtrar por tópicos mais populares (baseado em respostas e visualizações)
+    if filtro.lower() == "mais popular":
+        # Consulta com contagem de respostas
+        query = (
+            db.session.query(Topico, func.count(Resposta.id).label('num_respostas'))
+            .join(Resposta, Resposta.topico_id == Topico.id, isouter=True)
+            .group_by(Topico.id)
+            .order_by(func.count(Resposta.id).desc())  # Ordena pela contagem de respostas
+        )
+
+        # Retorna apenas os tópicos (primeiro item de cada resultado da consulta)
+        topicos = [item[0] for item in query.all()]
+
+    else:
+        topicos = query.all()
 
     for topico in topicos:
         # Atividade
@@ -99,6 +151,10 @@ def perfil():
 
 @principal_route.route('/<int:topicoID>', methods=['GET', 'POST'])
 def detalhe_topico(topicoID):
+
+    categorias = Categoria.query.all()
+    etiquetas = Etiqueta.query.all()
+
     form = RespostaForm()
     topico = Topico.query.filter_by(id=topicoID).first()
     autor = User.query.filter_by(id=topico.autor_id).first()
@@ -107,20 +163,25 @@ def detalhe_topico(topicoID):
     if request.method == 'POST':
         nova_resposta =  Resposta(texto=form.texto.data,
                              autor_id=current_user.id,
-                             topico_id=topicoID)
+                             topico_id=topicoID,
+                             data=datetime.now())
         db.session.add(nova_resposta)
         db.session.commit()
 
         return redirect(url_for('principal.detalhe_topico', topicoID=topico.id))
     
-    return render_template('detalhesTopico.html', topico=topico, autor=autor, imagem=autor_imagem, form=form, user=current_user.is_authenticated)
+    return render_template('detalhesTopico.html', topico=topico, autor=autor, imagem=autor_imagem, form=form, user=current_user.is_authenticated, categorias=categorias, etiquetas=etiquetas)
 
 @principal_route.route('/lista+respostas/<int:topicoID>')
 def lista_respostas(topicoID):
     respostas = Resposta.query.filter_by(topico_id=topicoID)
     return render_template('lista_respostas.html', respostas=respostas, tempo_relativo=tempo_relativo)
 
-@principal_route.route('/user+resposta/<int:userID>')
-def user_resposta(userID):
-    user = User.query.filter_by(id=userID).first()
-    return render_template('user_resposta.html', user=user)
+
+@principal_route.route('/lista+usuarios/<status>')
+def lista_usuarios(status:str):
+    usuarios = User.query.filter_by(status=status)
+    categorias = Categoria.query.all()
+    etiquetas = Etiqueta.query.all()
+    
+    return render_template('lista_usuarios.html', usuarios=usuarios, categorias=categorias, etiquetas=etiquetas, user=current_user.is_authenticated)

@@ -58,29 +58,55 @@
 
         <!-- Side navigation -->
         <div class="sidenav">
-            <a href="#">Topicos</a>
-            <a href="#">Minhas postagens</a>
-            <a href="#">Professores</a>
-            <a href="#">Alunos</a>
-            <a href="#">Mais</a>
+            <a 
+                href="{{ url_for('principal.principalTemplate', filtro='Meus Topicos') }}"
+                class="dropdown-text"
+                style="color: aliceblue;"
+            >
+                Minhas Postagens
+            </a>
+            <a 
+                href="lista+usuarios/Professores"
+                class="dropdown-text"
+                style="color: aliceblue;"
+            >
+                Professores
+            </a>
+            <a 
+                href="lista+usuarios/Aluno"
+                class="dropdown-text"
+                style="color: aliceblue;"
+            >
+                Alunos
+            </a>
             <div class="descer">
                 <div class="dropdown">
-                    <a onclick="myFunction()" class="dropdown-text">Categorias</a>
+                    <a onclick="myFunction()" class="dropdown-text" style="color: aliceblue;">Categorias</a>
                     <div id="myDropdown" class="dropdown-content">
-                      <a href="#categoria">geral</a>
-                      <a href="#categoria">Aviso</a>
-                      
+                        {% for categoria in categorias %}
+                        <a 
+                            href="{{ url_for('principal.principalTemplate', filtro=categoria.nome) }}"
+                            class="dropdown-text"
+                        >
+                            {{ categoria.nome }}
+                        </a>
+                      {% endfor %}                        
                     </div>
                   </div> 
                   <div class="dropdown">
-                    <a onclick="toggleEtiquetas()" class="dropdown-text">Etiquetas</a>
+                    <a onclick="toggleEtiquetas()" class="dropdown-text" style="color: aliceblue;">Etiquetas</a>
                     <div id="etiquetasDropdown" class="dropdown-content">
-                      <a href="#etiqueta1">Etiqueta 1</a>
-                      <a href="#etiqueta2">Etiqueta 2</a>
-                      <a href="#etiqueta3">Etiqueta 3</a>
+                        {% for etiqueta in etiquetas %}
+                        <a 
+                            href="{{ url_for('principal.principalTemplate', filtro=etiqueta.nome) }}"
+                            class="dropdown-text"
+                        >
+                            {{ etiqueta.nome }}
+                        </a>
+                      {% endfor %}  
                     </div>
                   </div>
-            <a href="{{ url_for('principal.logout') }}">Logout</a>
+            <a href="{{ url_for('principal.logout') }}" class="dropdown-text" style="color: aliceblue;">Logout</a>
             </div>
         </div>
     {% endif %}
@@ -90,29 +116,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     
     <script src="{{ url_for('static', filename='js/cru.js') }}"></script>
-    <script>
-        /* Alterna entre mostrar e esconder o conteúdo do dropdown */
-        function myFunction() {
-          document.getElementById("myDropdown").classList.toggle("show");
-        }
-    
-        function toggleEtiquetas() {
-        document.getElementById("etiquetasDropdown").classList.toggle("show");
-      }
-        
-        // Fecha o dropdown se o usuário clicar fora dele
-        window.onclick = function(event) {
-          if (!event.target.matches('.dropdown-text')) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            for (var i = 0; i < dropdowns.length; i++) {
-              var openDropdown = dropdowns[i];
-              if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-              }
-            }
-          }
-        }
-        </script>
+    <script src="{{ url_for('static', filename='js/dropdown.js') }}"></script>
     
         <!-- mostra os arquivos do upload-->
     

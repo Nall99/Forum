@@ -3,20 +3,25 @@
 <div class="main">
     <div class="coluna1" >
       <div class="elemento">
-        <a href="#">Não lidos</a>
+        <a 
+            c-get="{{ url_for('principal.lista_topicos', filtro='Mais Recentes') }}" 
+            c-swap="#lista-topicos" 
+            class="btn btn-outline-secondary"
+          >
+            Recentes
+          </a>
       </div>
       <div class="elemento">
-        <a href="#">Recentes</a>
-      </div>
-      <div class="elemento">
-        <a href="#">Categorias</a>
-      </div>
-      <div class="elemento">
-        <a href="#">Populares</a>
+        <a 
+            c-get="{{ url_for('principal.lista_topicos', filtro='Mais Popular') }}" 
+            c-swap="#lista-topicos" class="btn btn-outline-secondary"
+          >
+            Populares
+          </a>
       </div>
       
       <div class="topico">
-        <a href="criando+topico" class="btn btn-secondary" style="margin-left: 400px;">+ Criar Tópico</a>
+        <a href="criando+topico" class="btn btn-secondary" style="margin-left: 700px;">+ Criar Tópico</a>
       </div>
     </div>
 
@@ -45,8 +50,11 @@
       <a>Topicos</a>
     </div>
     <hr>
-
-    <div c-container="{{ url_for('principal.lista_topicos') }}"></div>
+    {% if filtro %}
+      <div c-container="{{ url_for('principal.lista_topicos', filtro=filtro) }}"></div>
+    {% else %}
+      <div c-container="{{ url_for('principal.lista_topicos', filtro='Mais Popular') }}"></div> 
+    {% endif %}
     
 
 </div>

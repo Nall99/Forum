@@ -5,12 +5,12 @@
         <div class="col-1" style="margin-right: 40px;">
             <img class="rounded-circle " style="height: 120px; width: 120px; margin-bottom: 16px;" src="{{ imagem }}">
         </div>
-        <div class="col-1">
+        <div class="col">
             <h1>{{ topico.titulo }}</h1>
-            <h2>{{ topico.autor.nome}}</h2>
+            <h3>{{ topico.autor.nome}}</h3>
         </div>
     </div>
-    <p>{{ topico.categoria }}</p>
+    <p>{{ topico.categoria }} -- {{ topico.etiqueta }}</p>
     <p>{{ topico.texto|safe }}</p>
     <hr>
     <div c-container="{{ url_for('principal.lista_respostas', topicoID=topico.id) }}" style="width: auto;"></div>

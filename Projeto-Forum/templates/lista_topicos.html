@@ -1,6 +1,8 @@
-{% for topico in topicos %}
-    <div class="coluna3" id="lista-topicos">
-      {% include 'item_topico.html' %}
-    </div>
-    <hr>
-{% endfor %}
+<div id="lista-topicos">
+  {% for topico in topicos %}
+      <div class="coluna3">
+        {% include 'item_topico.html' %}
+      </div>
+      <hr>
+  {% endfor %}
+</div>

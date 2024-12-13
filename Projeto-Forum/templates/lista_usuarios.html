@@ -1,0 +1,25 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="main">
+    {% for usuario in usuarios %}
+        <div class="container">
+            <div class="row" style="background: #ffffff; padding: 10px 20px; border: 1px solid #dddddd; border-radius: 3px; margin-bottom: 20px; margin-left: 20px;">
+                    <div class="media align-items-center">
+                        <img 
+                            class="rounded-circle" 
+                            style="height: 125px; width: 125px; margin-right: 20px; margin-bottom: 16px;" 
+                            src="{{ url_for('static', filename='profile-pics/' + usuario.arq_imagem) }}"
+                        >
+                        <div class="media-body">
+                                <h2 class="account-heading"> {{ usuario.nome }}</h2>
+                                <p class="text-secondary">{{ usuario.email }}</p>
+                        </div>
+                    </div>
+            </div>
+            
+        </div>  
+    {% endfor %}
+
+</div>
+
+{% endblock %}
