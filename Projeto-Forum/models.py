@@ -17,12 +17,14 @@ class User(db.Model, UserMixin):
     reportes_feitos = db.relationship(
         'Reportar', 
         foreign_keys='Reportar.autor_id', 
+        cascade='all, delete-orphan',
         backref='autor_do_reporte', 
         lazy=True
     )
     reportes_recebidos = db.relationship(
         'Reportar', 
-        foreign_keys='Reportar.target_id', 
+        foreign_keys='Reportar.target_id',
+        cascade='all, delete-orphan', 
         backref='usuario_reportado', 
         lazy=True
     )

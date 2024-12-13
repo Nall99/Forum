@@ -4,7 +4,7 @@
     <div class="container mt-5">
         <h1>Cadastro</h1>
         
-        <form action="{{ url_for('auth.cadastro') }}" method="POST">
+        <form action="{{ url_for('auth.cadastro') }}" method="POST" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
             <div class = "name">
                 {% if form.nome.errors %}

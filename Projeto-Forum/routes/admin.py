@@ -72,4 +72,4 @@ def deletar_usuario(userID):
     except Exception as e:
         db.session.rollback()
         flash(f"Erro ao excluir o tópico: {str(e)}", "error")
-    return redirect(url_for('admin.dashboard', user=current_user))
+    return redirect(url_for('admin.dashboard', user=current_user, usuarios=usuarios))

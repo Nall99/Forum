@@ -65,7 +65,8 @@ def cadastro():
         return redirect(url_for('principal.principalTemplate', filtro='nada'))
     
     form = CadastroForm()
-    if form.validate_on_submit():
+    if request.method == "POST":
+        
         hash_senha = generate_password_hash(form.senha.data, method='pbkdf2:sha256')
         new_user = User(nome=form.nome.data, email=form.email.data, senha=hash_senha, status='Aluno')
         db.session.add(new_user)
