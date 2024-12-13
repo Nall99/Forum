@@ -200,7 +200,7 @@ def denuncia(targetID, topicoID):
         db.session.add(novo_reporte)
         db.session.commit()
         return redirect(url_for('principal.detalhe_topico', topicoID=topicoID))
-    return render_template('report.html', form=form, targetID=targetID, topicoID=topicoID)
+    return render_template('report.html', form=form, targetID=targetID, topicoID=topicoID, user=current_user)
 
 @principal_route.route('/excluir_topico/<int:topicoID>', methods=['GET'])
 @login_required

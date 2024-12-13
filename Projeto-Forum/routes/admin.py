@@ -35,9 +35,9 @@ def cadastrar_usuario():
 @admin_route.route('/ver_denuncias')
 @login_required
 def ver_denuncias():
-
     denuncias = Reportar.query.all()
-    return render_template('ver_denuncias.html', denuncias=denuncias)
+    
+    return render_template('ver_denuncias.html', denuncias=denuncias, user=current_user)
 
 @admin_route.route('/ver_usuarios')
 @login_required
