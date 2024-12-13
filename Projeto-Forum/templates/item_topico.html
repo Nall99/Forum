@@ -7,7 +7,7 @@
             style="height: 90px; width: 90px;"
             >
         </div>
-        <div class="col-xl-7" style="margin-right: 15px;">
+        <div class="col-xl-7">
             <div class="espaco text-start"><p class="titulo">{{ topico.titulo }}</p></div>
             <div class="espaco text-start"><p class="categoria">{{ topico.categoria }}</p></div>
             <div class="espaco text-start text-truncate" style="overflow: hidden; width: 70%;">{{ topico.texto|safe }}</div>
@@ -19,8 +19,8 @@
         <div class="col-sm-1" style="margin-right: 20px;">
             <div class="espaco"><p>{{ topico.quantidade_de_autores_unicos }}</p></div>
         </div>
-        <div class="col-sm-1" style="padding: 0px;">
-            <div class="espaco "><p>
+        <div class="col-sm-1" style="padding: 0px; padding-top: 15px;">
+            <div><p>
                 {% if topico.ultima_resposta_data %}
                     {{ tempo_relativo(topico.ultima_resposta_data) }}
                 {% else %}

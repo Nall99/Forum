@@ -99,6 +99,18 @@ a {
     
 }
 
+.entrar button {
+    cursor: pointer;
+    width: 120px;
+    height: 40px;
+    border-radius: 20px;
+    border: none;
+    background-color: azure;
+    color: #00000080;
+    margin-top: 15px;
+    
+}
+
 .entrar p {
     font-size: 14px;
 }

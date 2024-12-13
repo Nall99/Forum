@@ -41,11 +41,11 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-    {% if user %}
+    {% if user.is_authenticated and user.status != 'Admin'%}
         <!-- TOPO -->
         <div class="topnav fixed-top">
             <div class ="campus">
-            <a class="active" href="/principal">Conecta Campus</a>
+            <a class="active" href="/principal/nada">Conecta Campus</a>
             </div>
             <a href="perfil"><i class="bi bi-person-fill"></i></a>
             <a href="#notificacao"><i class="bi bi-bell-fill"></i></a>
@@ -66,14 +66,14 @@
                 Minhas Postagens
             </a>
             <a 
-                href="lista+usuarios/Professores"
+                href="{{ url_for('principal.lista_usuarios', status='Professor') }}"
                 class="dropdown-text"
                 style="color: aliceblue;"
             >
                 Professores
             </a>
             <a 
-                href="lista+usuarios/Aluno"
+                href="{{ url_for('principal.lista_usuarios', status='Aluno') }}"
                 class="dropdown-text"
                 style="color: aliceblue;"
             >
@@ -109,8 +109,52 @@
             <a href="{{ url_for('principal.logout') }}" class="dropdown-text" style="color: aliceblue;">Logout</a>
             </div>
         </div>
+    {% elif  user.status == "Admin"%}
+    <div class="container mt-5">
+        <h1 class="mb-4">Admin Dashboard</h1>
+        <p class="lead">Bem-vindo ao painel de administração. Aqui você pode gerenciar usuários e denúncias.</p>
+      
+        <div class="row">
+            <div class="col">
+                <a href="{{ url_for('admin.cadastrar_usuario') }}" class="badge" style="color: black; font-size: large;">Cadastrar Usuário</a>
+            </div>
+            <div class="col">
+                <a href="{{ url_for('admin.ver_denuncias') }}" class="badge" style="color: black; font-size: large;">Ver Denúncias</a>
+
+            </div>
+            <div class="col">
+                <a href="{{ url_for('admin.ver_usuarios') }}" class="badge" style="color: black; font-size: large;">Ver Usuários</a>
+
+            </div>
+            <div class="col">
+
+                <a href="{{ url_for('admin.ver_alunos') }}" class="badge" style="color: black; font-size: large;">Ver Alunos</a>
+            </div>
+            <div class="col">
+                <a href="{{ url_for('admin.ver_professores') }}" class="badge" style="color: black; font-size: large;">Ver Professores</a>
+
+            </div>
+            <div class="col">
+                <a href="{{ url_for('principal.logout') }}" class="badge" style="color: black; font-size: large;">Sair</a>
+
+            </div>
+        </div>
+    </div>
     {% endif %}
-        {% block content %}{% endblock %}
+    {% block content %}{% endblock %}
+    
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Denuncia</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="exibir-denuncia"></div>
+          </div>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

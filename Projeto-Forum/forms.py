@@ -19,6 +19,7 @@ class CadastroForm(FlaskForm):
     email = StringField(validators=[DataRequired(), Email()])
     senha = PasswordField(validators=[DataRequired(), Length(min=8)])
     confirmar_senha = PasswordField(validators=[DataRequired(), EqualTo('senha')])
+    status = SelectField(validators=[DataRequired()], choices=["Aluno", "Admin", "Professor"])
     submit = SubmitField('Cadastrar')
 
     def validate_email(self, email):
@@ -46,4 +47,13 @@ class UpdateForm(FlaskForm):
 
 class RespostaForm(FlaskForm):
     texto = CKEditorField('Texto', validators=[DataRequired()])
+    submit = SubmitField()
+
+class DenunciaForm(FlaskForm):
+    motivo = StringField('Motivo', validators=[DataRequired()])
     submit = SubmitField('Enviar')
+
+class RecuperarForm(FlaskForm):
+    email = StringField(validators=[DataRequired(), Email()])
+    codigo = StringField(validators=[DataRequired()])
+    submit = SubmitField()

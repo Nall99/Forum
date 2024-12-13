@@ -8,7 +8,7 @@
             style="height: 50px; width: 50px;"
             >
         </div>
-        <div class="col">
+        <div class="col-xl-10">
             <div class="media-body">
                 <div class="align-center">
                 {{ resposta.autor.nome }}
@@ -18,6 +18,20 @@
                 <p class="article-content">{{ resposta.texto|safe }}</p>
             </div>
         </div>
+        {% if resposta.autor.id != current_user.id%}
+            <div class="col">
+                <button 
+                    class="btn btn-outline-secondary"
+                    style="border: 0px;"
+                    c-get="{{ url_for('principal.denuncia', targetID=resposta.autor.id, topicoID=resposta.topico.id) }}"
+                    c-target="#exibir-denuncia"
+                    data-bs-toggle="modal" data-bs-target="#exampleModal"
+                >
+                    <i class="bi bi-flag"></i>
+                </button>
+                
+            </div>
+        {% endif %}
     </div>
 </div>
 {% endfor %}

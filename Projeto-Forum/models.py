@@ -10,11 +10,34 @@ class User(db.Model, UserMixin):
     senha = db.Column(db.String(40), nullable=False)
     arq_imagem = db.Column(db.String(20), nullable=False, default='default.jpg')
     status = db.Column(db.String(20), nullable=False)
-    topicos = db.relationship('Topico', backref='autor', lazy=True)
-    respostas = db.relationship('Resposta', backref='autor', lazy=True)
+    topicos = db.relationship('Topico', backref='autor', cascade='all, delete-orphan', lazy=True)
+    respostas = db.relationship('Resposta', backref='autor', cascade='all, delete-orphan', lazy=True)
+
+    # Relacionamento com a tabela Reportar
+    reportes_feitos = db.relationship(
+        'Reportar', 
+        foreign_keys='Reportar.autor_id', 
+        backref='autor_do_reporte', 
+        lazy=True
+    )
+    reportes_recebidos = db.relationship(
+        'Reportar', 
+        foreign_keys='Reportar.target_id', 
+        backref='usuario_reportado', 
+        lazy=True
+    )
 
     def __repr__(self) -> str:
         return f"Usuario('{self.nome}', '{self.email}', '{self.arq_imagem}')"
+
+class Reportar(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    autor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    target_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    motivo = db.Column(db.String(255), nullable=False)
+    data = db.Column(db.DateTime, nullable=False)
+    def __repr__(self):
+        return f"Reportar(Autor: {self.autor_id}, Alvo: {self.target_id}, Motivo: {self.motivo})"
 
 class Topico(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -24,10 +47,10 @@ class Topico(db.Model):
     etiqueta = db.Column(db.String(150))
     autor_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     texto = db.Column(db.String(400))
-    respostas = db.relationship('Resposta', backref='respostas', lazy=True)
+    respostas = db.relationship('Resposta', backref='topico', cascade='all, delete-orphan', lazy=True)
 
     def __repr__(self) -> str:
-        return f"(Topico'{self.titulo}', '{self.categoria}', '{self.data}')"
+        return f"(Topico'{self.titulo}', '{self.categoria}', '{self.etiqueta}', '{self.data}')"
 
 class Resposta(db.Model):
     id = db.Column(db.Integer, primary_key=True)

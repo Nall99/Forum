@@ -1,25 +1,35 @@
 {% extends "index.html" %}
 {% block content %}
-<div class="main">
+<div 
+    {% if user.status == "Admin" %}
+        role="main"
+        class="mt-5"
+    {% else %}
+        class="main"
+        style="margin-left: 195px;"
+    {% endif%}
+>
     {% for usuario in usuarios %}
         <div class="container">
-            <div class="row" style="background: #ffffff; padding: 10px 20px; border: 1px solid #dddddd; border-radius: 3px; margin-bottom: 20px; margin-left: 20px;">
-                    <div class="media align-items-center">
-                        <img 
-                            class="rounded-circle" 
-                            style="height: 125px; width: 125px; margin-right: 20px; margin-bottom: 16px;" 
-                            src="{{ url_for('static', filename='profile-pics/' + usuario.arq_imagem) }}"
-                        >
-                        <div class="media-body">
-                                <h2 class="account-heading"> {{ usuario.nome }}</h2>
-                                <p class="text-secondary">{{ usuario.email }}</p>
-                        </div>
+            <div class="row align-items-center justify-content-between" style="background: #ffffff; padding: 10px 20px; border: 1px solid #dddddd; border-radius: 3px; margin-bottom: 20px;">
+                <div class="col-md-8 d-flex align-items-center">
+                    <img 
+                        class="rounded-circle" 
+                        style="height: 125px; width: 125px; margin-right: 20px;" 
+                        src="{{ url_for('static', filename='profile-pics/' + usuario.arq_imagem) }}"
+                    >
+                    <div>
+                        <h2 class="account-heading"> {{ usuario.nome }}</h2>
+                        <p class="text-secondary">{{ usuario.email }}</p>
                     </div>
+                </div>
+                {% if user.status == "Admin" %}
+                <div class="col-md-4 text-end">
+                    <a class="btn btn-danger" href="{{ url_for('admin.deletar_usuario', userID=usuario.id)}}">Deletar</a>
+                </div>
+                {% endif %}
             </div>
-            
-        </div>  
+        </div>
     {% endfor %}
-
 </div>
-
 {% endblock %}

@@ -35,6 +35,9 @@
                 {% endif %}
             </div>
             <div class="modal-footer">
+                {% if topico.autor.id == current_user.id %}
+                    <a class="btn btn-outline-danger" href="{{ url_for('principal.excluir_topico', topicoID=topico.id) }}">Excluir Tópico</a>
+                {% endif %}
                 {{ form.submit(class="btn btn-primary") }}
             </div>
         </form>

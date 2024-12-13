@@ -1,0 +1,20 @@
+{% extends "index.html" %}]
+{% block content %}
+<form 
+    action="{{ url_for('principal.denuncia', targetID=targetID, topicoID=topicoID) }}"
+    method="POST"
+    enctype="multipart/form-data"
+>
+    {{ form.hidden_tag() }}
+    <fieldset class="form-group">
+        <div class="form-group">
+            {{ form.motivo.label }}
+            {{ form.motivo(class="form-control") }}
+        </div>
+    </fieldset>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        {{ form.submit(class='btn btn-primary') }}
+      </div>
+</form>
+{% endblock%}

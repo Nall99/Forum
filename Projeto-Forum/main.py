@@ -7,6 +7,7 @@ from flask import Flask
 # Importação das Rotas
 from routes.principal import principal_route
 from routes.auth import auth_route
+from routes.admin import admin_route
 
 # Criando app
 app = Flask(__name__)
@@ -32,6 +33,7 @@ def load_user(user_id):
 def configurarRotas(app):
     app.register_blueprint(auth_route)
     app.register_blueprint(principal_route, url_prefix='/principal')
+    app.register_blueprint(admin_route, url_prefix='/admin')
 
 # Executando a config das rotas
 configurarRotas(app)

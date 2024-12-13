@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, flash, request, redirect, url_for
 from flask_login import current_user, login_required, logout_user
-from forms import TopicoForm, UpdateForm, RespostaForm
-from models import Topico, User, Resposta, Categoria, Etiqueta, db
+from forms import TopicoForm, UpdateForm, RespostaForm, DenunciaForm
+from models import Topico, User, Resposta, Categoria, Etiqueta, Reportar, db
 from datetime import datetime
 from sqlalchemy import func
 from PIL import Image
@@ -26,11 +26,13 @@ def tempo_relativo(data_envio):
     else:
         return "Agora mesmo"
 
-@principal_route.route('/')
-def principalTemplate():
+@principal_route.route('/<filtro>')
+def principalTemplate(filtro):
+    if filtro == "nada":
+        filtro = None
     categorias = Categoria.query.all()
     etiquetas = Etiqueta.query.all()
-    return render_template('conteudoPrincipal.html', user=current_user.is_authenticated, categorias=categorias, etiquetas=etiquetas)
+    return render_template('conteudoPrincipal.html', filtro=filtro, user=current_user, categorias=categorias, etiquetas=etiquetas)
 
 @principal_route.route('/logout')
 @login_required
@@ -66,8 +68,8 @@ def criando_topico():
                              data=datetime.now())
         db.session.add(novo_topico)
         db.session.commit()
-        return redirect(url_for('principal.principalTemplate'))
-    return render_template('formulario.html', form=form, user=current_user.is_authenticated)
+        return redirect(url_for('principal.principalTemplate', filtro='nada'))
+    return render_template('formulario.html', form=form, user=current_user)
 
 @principal_route.route('/lista+topicos/<filtro>')
 def lista_topicos(filtro):
@@ -147,7 +149,7 @@ def perfil():
         form.nome.data = current_user.nome
         form.email.data = current_user.email
     arq_imagem = url_for('static', filename='profile-pics/' + current_user.arq_imagem)
-    return render_template('perfil.html', imagem=arq_imagem, form=form)
+    return render_template('perfil.html', imagem=arq_imagem, form=form, user=None)
 
 @principal_route.route('/<int:topicoID>', methods=['GET', 'POST'])
 def detalhe_topico(topicoID):
@@ -170,18 +172,55 @@ def detalhe_topico(topicoID):
 
         return redirect(url_for('principal.detalhe_topico', topicoID=topico.id))
     
-    return render_template('detalhesTopico.html', topico=topico, autor=autor, imagem=autor_imagem, form=form, user=current_user.is_authenticated, categorias=categorias, etiquetas=etiquetas)
+    return render_template('detalhesTopico.html', topico=topico, autor=autor, imagem=autor_imagem, form=form, user=current_user, categorias=categorias, etiquetas=etiquetas)
 
 @principal_route.route('/lista+respostas/<int:topicoID>')
 def lista_respostas(topicoID):
     respostas = Resposta.query.filter_by(topico_id=topicoID)
     return render_template('lista_respostas.html', respostas=respostas, tempo_relativo=tempo_relativo)
 
-
 @principal_route.route('/lista+usuarios/<status>')
 def lista_usuarios(status:str):
-    usuarios = User.query.filter_by(status=status)
+    usuarios = User.query.filter_by(status=status).all()
     categorias = Categoria.query.all()
     etiquetas = Etiqueta.query.all()
     
-    return render_template('lista_usuarios.html', usuarios=usuarios, categorias=categorias, etiquetas=etiquetas, user=current_user.is_authenticated)
+    return render_template('lista_usuarios.html', usuarios=usuarios, categorias=categorias, etiquetas=etiquetas, user=current_user)
+
+@principal_route.route('/denunca/<int:targetID>/<int:topicoID>', methods=['GET', 'POST'])
+def denuncia(targetID, topicoID):
+    form = DenunciaForm()
+    if request.method == 'POST':
+        novo_reporte = Reportar(
+        autor_id=current_user.id, 
+        target_id=targetID, 
+        motivo=form.motivo.data,
+        data=datetime.now()
+        )
+        db.session.add(novo_reporte)
+        db.session.commit()
+        return redirect(url_for('principal.detalhe_topico', topicoID=topicoID))
+    return render_template('report.html', form=form, targetID=targetID, topicoID=topicoID)
+
+@principal_route.route('/excluir_topico/<int:topicoID>', methods=['GET'])
+@login_required
+def excluir_topico(topicoID):
+    # Buscar o tópico no banco de dados
+    topico = Topico.query.get_or_404(topicoID)
+
+    # Verificar se o tópico pertence ao usuário atual
+    if topico.autor_id != current_user.id:
+        flash("Você não tem permissão para excluir este tópico.", "error")
+        return redirect(url_for('principal.principalTemplate', filtro='Meus topicos'))
+
+    # Excluir o tópico e salvar as alterações
+    try:
+        db.session.delete(topico)
+        db.session.commit()
+        flash("Tópico excluído com sucesso.", "success")
+    except Exception as e:
+        db.session.rollback()
+        flash(f"Erro ao excluir o tópico: {str(e)}", "error")
+    
+    # Redirecionar para a lista de tópicos
+    return redirect(url_for('principal.principalTemplate', filtro='nada'))
