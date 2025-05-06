@@ -27,11 +27,6 @@ entre eles mesmo
 dos tópicos
 
 ### ID: RF5
-* Nome: notificações
-* Descrição: Os criadores dos tópicos recebem as notificações das pessoas que comentaram e os
-professores de cada categorias também serão notificados
-
-### ID: RF6
 * Nome: Login/cadastro
 * Descrição: Tanto para o cadastro quanto para o login é necessário dizer se é “aluno” ou “professor”
 
